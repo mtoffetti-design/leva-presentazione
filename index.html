@@ -1,394 +1,410 @@
-<!DOCTYPE html>
-<html lang="it">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEVA: dall'aula all'avatar</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            overflow: hidden;
-        }
-
-        .presentation-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-
-        .slide {
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 60px;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .slide.active {
-            display: flex;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .slide h1 {
-            font-size: 3.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .slide h2 {
-            font-size: 2.8em;
-            margin-bottom: 25px;
-            color: #ffd700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .slide h3 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #e6e6fa;
-            font-weight: 300;
-        }
-
-        .slide p {
-            font-size: 1.4em;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            max-width: 900px;
-        }
-
-        .slide ul {
-            list-style: none;
-            font-size: 1.3em;
-            line-height: 1.8;
-            max-width: 800px;
-        }
-
-        .slide li {
-            margin-bottom: 15px;
-            padding-left: 30px;
-            position: relative;
-        }
-
-        .slide li:before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: #ffd700;
-            font-size: 1.2em;
-        }
-
-        .quote {
-            font-style: italic;
-            font-size: 1.5em;
-            border-left: 4px solid #ffd700;
-            padding-left: 30px;
-            margin: 30px 0;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-        }
-
-        .leva-letter {
-            display: inline-block;
-            font-size: 4em;
-            color: #ffd700;
-            margin-right: 20px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        button {
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            cursor: pointer;
-            border-radius: 25px;
-            font-size: 1em;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .slide-counter {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            font-size: 1.1em;
-        }
-
-        .title-slide {
-            background: linear-gradient(135deg, #2c3e50 0%, #4a6741 50%, #2c3e50 100%);
-        }
-
-        .leva-slide {
-            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
-        }
-
-        .final-slide {
-            background: linear-gradient(135deg, #1e1e2e 0%, #3d4f7c 100%);
-        }
-
-        .lantern-icon {
-            font-size: 3em;
-            color: #ffd700;
-            margin: 20px 0;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #ffd700; }
-            to { text-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700; }
-        }
-
-        .question-slide {
-            font-size: 1.2em;
-        }
-
-        .question-slide h2 {
-            color: #ff6b6b;
-        }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
 </head>
 <body>
-    <div class="presentation-container">
-        <div class="slide-counter">
-            <span id="current-slide">1</span> / <span id="total-slides">14</span>
-        </div>
-
-        <!-- Slide 1: Titolo -->
-        <div class="slide active title-slide">
-            <h1>LEVA: dall'aula all'avatar</h1>
-            <h3>Una proposta psicopedagogica per ritrovare l'umano nell'educazione con intelligenza artificiale</h3>
-            <div class="lantern-icon">🏮</div>
-        </div>
-
-        <!-- Slide 2: La Nuova Realtà -->
-        <div class="slide">
-            <h2>Oltre i confini di gesso e legno</h2>
-            <ul>
-                <li>L'insegnamento si smaterializza, il sapere corre nel digitale</li>
-                <li>Le aule si disciolgono, i docenti diventano icone</li>
-                <li>Gli studenti si specchiano in schermi che osservano</li>
-            </ul>
-            <p style="margin-top: 40px; font-style: italic; color: #e6e6fa;">
-                "Viviamo in un tempo in cui l'insegnamento ha smesso di avere confini di gesso e legno..."
-            </p>
-        </div>
-
-        <!-- Slide 3: La Domanda Cruciale -->
-        <div class="slide question-slide">
-            <h2>Che cosa stiamo diventando?</h2>
-            <ul>
-                <li>Un vero potenziamento o una nuova dipendenza?</li>
-                <li>Efficienza, ottimizzazione, progresso...</li>
-                <li>...o solo una maschera per la disumanizzazione?</li>
-            </ul>
-        </div>
-
-        <!-- Slide 4: Heidegger -->
-        <div class="slide">
-            <h2>La tecnica e il rischio di "inquadrare"</h2>
-            <div class="quote">
-                "L'essenza della tecnica moderna non è tecnica, ma un modo di 'inquadrare' la realtà, di pro-vocarla a mostrarsi come risorsa disponibile."
-                <br><em>— M. Heidegger</em>
-            </div>
-            <p><strong>L'educazione può essere ridotta a calcolo o ottimizzata come un algoritmo?</strong></p>
-        </div>
-
-        <!-- Slide 5: Essenza dell'Apprendimento -->
-        <div class="slide">
-            <h2>L'Apprendimento è...</h2>
-            <ul>
-                <li>Lentezza, inciampo, silenzio</li>
-                <li>Il tempo dell'errore, della meraviglia, del dubbio</li>
-                <li>L'abbraccio di un insegnante che comprende</li>
-                <li>L'empatia, insimulabile da una macchina</li>
-            </ul>
-        </div>
-
-        <!-- Slide 6: Non Rifiutare -->
-        <div class="slide">
-            <h2>Integrare, non rigettare</h2>
-            <ul>
-                <li>Non siamo qui per rigettare la tecnologia. Sarebbe cieco.</li>
-                <li>Siamo qui per restituirle un senso</li>
-                <li>Quale posto le spetta nella casa dell'umano?</li>
-            </ul>
-        </div>
-
-        <!-- Slide 7: Presentazione LEVA -->
-        <div class="slide leva-slide">
-            <h2>Il Modello LEVA</h2>
-            <h3>Una Postura per l'Educazione</h3>
-            <p>Non un protocollo. Non un'app. È una postura. Un orientamento dell'anima.</p>
-            <div style="font-size: 5em; margin: 30px 0; text-shadow: 4px 4px 8px rgba(0,0,0,0.5);">
-                L E V A
-            </div>
-        </div>
-
-        <!-- Slide 8: L - Lentezza -->
-        <div class="slide leva-slide">
-            <div class="leva-letter">L</div>
-            <h2>Lentezza</h2>
-            <p>Perché imparare è anche perdersi, non solo arrivare. Favorisce la riflessione e la profondità.</p>
-            <div style="font-size: 3em; margin: 30px 0;">🐌</div>
-        </div>
-
-        <!-- Slide 9: E - Empatia -->
-        <div class="slide leva-slide">
-            <div class="leva-letter">E</div>
-            <h2>Empatia</h2>
-            <p>Perché educare è prima di tutto incontrare l'altro. Riconosce il valore dell'interazione umana autentica.</p>
-            <div style="font-size: 3em; margin: 30px 0;">💝</div>
-        </div>
-
-        <!-- Slide 10: V - Verità -->
-        <div class="slide leva-slide">
-            <div class="leva-letter">V</div>
-            <h2>Verità</h2>
-            <p>Perché non tutto ciò che funziona è vero, e non tutto ciò che è vero è misurabile. Supera la logica dell'ottimizzazione algoritmica.</p>
-            <div style="font-size: 3em; margin: 30px 0;">⚖️</div>
-        </div>
-
-        <!-- Slide 11: A - Autonomia -->
-        <div class="slide leva-slide">
-            <div class="leva-letter">A</div>
-            <h2>Autonomia</h2>
-            <p>Perché formare non è riempire, ma accendere. Promuove il pensiero critico e l'indipendenza.</p>
-            <div style="font-size: 3em; margin: 30px 0;">🔥</div>
-        </div>
-
-        <!-- Slide 12: LEVA Lanterna -->
-        <div class="slide">
-            <h2>LEVA: La nostra Lanterna nel buio digitale</h2>
-            <div class="lantern-icon">🏮</div>
-            <ul>
-                <li>La forza gentile che solleva l'educazione dal rischio della disumanizzazione</li>
-                <li>La lanterna che cerca ancora mani per brillare</li>
-            </ul>
-        </div>
-
-        <!-- Slide 13: La Scelta -->
-        <div class="slide final-slide">
-            <h2>La Nostra Scelta Oggi</h2>
-            <p>Consegnarsi all'omologazione di un apprendimento standardizzato e algoritmico...</p>
-            <p style="margin: 40px 0; font-size: 1.6em; color: #ffd700;"><strong>...oppure...</strong></p>
-            <p>Restare custodi di uno spazio fragile, umano, irriducibile, in cui il sapere non è solo un prodotto, ma un incontro.</p>
-        </div>
-
-        <!-- Slide 14: Invito -->
-        <div class="slide final-slide">
-            <h1>Io scelgo la lanterna.</h1>
-            <div class="lantern-icon">🏮</div>
-            <h2 style="margin-top: 50px; color: #ffd700;">Voi?</h2>
-        </div>
-
-        <div class="navigation">
-            <button id="prev-btn" onclick="previousSlide()">← Precedente</button>
-            <button id="next-btn" onclick="nextSlide()">Successiva →</button>
-        </div>
-    </div>
-
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        
-        document.getElementById('total-slides').textContent = totalSlides;
-
-        function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
-            
-            document.getElementById('current-slide').textContent = currentSlide + 1;
-            
-            // Update navigation buttons
-            document.getElementById('prev-btn').disabled = currentSlide === 0;
-            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                showSlide(currentSlide + 1);
-            }
-        }
-
-        function previousSlide() {
-            if (currentSlide > 0) {
-                showSlide(currentSlide - 1);
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                previousSlide();
-            } else if (e.key === 'Home') {
-                showSlide(0);
-            } else if (e.key === 'End') {
-                showSlide(totalSlides - 1);
-            }
-        });
-
-        // Initialize
-        showSlide(0);
-    </script>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="it"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;LEVA: dall'aula all'avatar&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.presentation-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100vw;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 60px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(10px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.8s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(30px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 3.5em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(45deg, #fff, #f0f0f0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-background-clip: text;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-text-fill-color: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-clip: text;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.8em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide h3 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.8em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #e6e6fa;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide p {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.4em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide ul {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.3em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.8;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide li {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-left: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide li:before {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: "✦";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2em;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.quote {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-style: italic;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid #ffd700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-left: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 30px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.leva-letter {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 4em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: pulse 2s infinite;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes pulse {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0%, 100% { transform: scale(1); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>50% { transform: scale(1.1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.navigation {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid rgba(255, 255, 255, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(10px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>button:disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slide-counter {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(10px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1em;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.title-slide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #2c3e50 0%, #4a6741 50%, #2c3e50 100%);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.leva-slide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.final-slide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #1e1e2e 0%, #3d4f7c 100%);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.lantern-icon {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 3em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ffd700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: glow 3s ease-in-out infinite alternate;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes glow {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { text-shadow: 0 0 20px #ffd700; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { text-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.question-slide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2em;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.question-slide h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ff6b6b;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="presentation-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide-counter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="current-slide"&gt;1&lt;/span&gt; / &lt;span id="total-slides"&gt;14&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 1: Titolo --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide active title-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;LEVA: dall'aula all'avatar&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Una proposta psicopedagogica per ritrovare l'umano nell'educazione con intelligenza artificiale&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lantern-icon"&gt;🏮&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 2: La Nuova Realtà --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Oltre i confini di gesso e legno&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;L'insegnamento si smaterializza, il sapere corre nel digitale&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Le aule si disciolgono, i docenti diventano icone&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Gli studenti si specchiano in schermi che osservano&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p style="margin-top: 40px; font-style: italic; color: #e6e6fa;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Viviamo in un tempo in cui l'insegnamento ha smesso di avere confini di gesso e legno..."</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 3: La Domanda Cruciale --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide question-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Che cosa stiamo diventando?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Un vero potenziamento o una nuova dipendenza?&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Efficienza, ottimizzazione, progresso...&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;...o solo una maschera per la disumanizzazione?&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 4: Heidegger --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;La tecnica e il rischio di "inquadrare"&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="quote"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"L'essenza della tecnica moderna non è tecnica, ma un modo di 'inquadrare' la realtà, di pro-vocarla a mostrarsi come risorsa disponibile."</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;br&gt;&lt;em&gt;— M. Heidegger&lt;/em&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;L'educazione può essere ridotta a calcolo o ottimizzata come un algoritmo?&lt;/strong&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 5: Essenza dell'Apprendimento --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;L'Apprendimento è...&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Lentezza, inciampo, silenzio&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Il tempo dell'errore, della meraviglia, del dubbio&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;L'abbraccio di un insegnante che comprende&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;L'empatia, insimulabile da una macchina&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 6: Non Rifiutare --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Integrare, non rigettare&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Non siamo qui per rigettare la tecnologia. Sarebbe cieco.&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Siamo qui per restituirle un senso&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;Quale posto le spetta nella casa dell'umano?&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 7: Presentazione LEVA --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide leva-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Il Modello LEVA&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Una Postura per l'Educazione&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Non un protocollo. Non un'app. È una postura. Un orientamento dell'anima.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size: 5em; margin: 30px 0; text-shadow: 4px 4px 8px rgba(0,0,0,0.5);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>L E V A</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 8: L - Lentezza --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide leva-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="leva-letter"&gt;L&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Lentezza&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Perché imparare è anche perdersi, non solo arrivare. Favorisce la riflessione e la profondità.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size: 3em; margin: 30px 0;"&gt;🐌&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 9: E - Empatia --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide leva-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="leva-letter"&gt;E&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Empatia&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Perché educare è prima di tutto incontrare l'altro. Riconosce il valore dell'interazione umana autentica.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size: 3em; margin: 30px 0;"&gt;💝&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 10: V - Verità --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide leva-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="leva-letter"&gt;V&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Verità&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Perché non tutto ciò che funziona è vero, e non tutto ciò che è vero è misurabile. Supera la logica dell'ottimizzazione algoritmica.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size: 3em; margin: 30px 0;"&gt;⚖️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 11: A - Autonomia --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide leva-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="leva-letter"&gt;A&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Autonomia&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Perché formare non è riempire, ma accendere. Promuove il pensiero critico e l'indipendenza.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size: 3em; margin: 30px 0;"&gt;🔥&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 12: LEVA Lanterna --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;LEVA: La nostra Lanterna nel buio digitale&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lantern-icon"&gt;🏮&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;La forza gentile che solleva l'educazione dal rischio della disumanizzazione&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;li&gt;La lanterna che cerca ancora mani per brillare&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 13: La Scelta --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide final-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;La Nostra Scelta Oggi&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Consegnarsi all'omologazione di un apprendimento standardizzato e algoritmico...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p style="margin: 40px 0; font-size: 1.6em; color: #ffd700;"&gt;&lt;strong&gt;...oppure...&lt;/strong&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Restare custodi di uno spazio fragile, umano, irriducibile, in cui il sapere non è solo un prodotto, ma un incontro.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Slide 14: Invito --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="slide final-slide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;Io scelgo la lanterna.&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lantern-icon"&gt;🏮&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 style="margin-top: 50px; color: #ffd700;"&gt;Voi?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="navigation"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="prev-btn" onclick="previousSlide()"&gt;← Precedente&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="next-btn" onclick="nextSlide()"&gt;Successiva →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentSlide = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const slides = document.querySelectorAll('.slide');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const totalSlides = slides.length;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('total-slides').textContent = totalSlides;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showSlide(n) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>slides[currentSlide].classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentSlide = (n + totalSlides) % totalSlides;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>slides[currentSlide].classList.add('active');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('current-slide').textContent = currentSlide + 1;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update navigation buttons</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('prev-btn').disabled = currentSlide === 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function nextSlide() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (currentSlide &lt; totalSlides - 1) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showSlide(currentSlide + 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function previousSlide() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (currentSlide &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showSlide(currentSlide - 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Keyboard navigation</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('keydown', function(e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (e.key === 'ArrowRight' || e.key === ' ') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>nextSlide();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (e.key === 'ArrowLeft') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>previousSlide();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (e.key === 'Home') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showSlide(0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (e.key === 'End') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showSlide(totalSlides - 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize</p>
+<p class="p1"><span class="Apple-converted-space">        </span>showSlide(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
